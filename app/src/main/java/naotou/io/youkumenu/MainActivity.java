@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 //判断二级菜单是否显示
                 if (isMenu2Show) {
                     //如果二级是显示的
-                    hideView(menu2,100);
+                    hideView(menu2, 100);
                     isMenu2Show = false;
                     if (isMenu3Show) {
                         //如果三级是显示的
@@ -77,6 +77,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         animation.setFillAfter(true);
         layout.startAnimation(animation);
 
+        for (int j = 0; j < layout.getChildCount(); j++) {
+            View child = layout.getChildAt(j);
+            child.setEnabled(true);
+        }
+
     }
 
 
@@ -85,7 +90,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         animation.setStartOffset(i);
         animation.setFillAfter(true);
         layout.startAnimation(animation);
-
+        //解决如果隐藏了二级view 在相同位置继续点击会相应点击事件的问题.
+        for (int j = 0; j < layout.getChildCount(); j++) {
+            View child = layout.getChildAt(j);
+            child.setEnabled(false);
+        }
     }
 
     @Override
@@ -95,18 +104,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 //如果一级菜单是隐藏的,那么显示12级
                 showView(menu1);
                 showView(menu2);
-                isMenu1Show=true;
-                isMenu2Show=true;
+                isMenu1Show = true;
+                isMenu2Show = true;
             } else {
                 //如果一级菜单是显示的,隐藏一级菜单
-                hideView(menu1,0);
-                isMenu1Show=false;
+                hideView(menu1, 0);
+                isMenu1Show = false;
                 if (isMenu2Show) {
-                    hideView(menu2,100);
-                    isMenu2Show=false;
+                    hideView(menu2, 100);
+                    isMenu2Show = false;
                     if (isMenu3Show) {
-                        hideView(menu3,200);
-                        isMenu3Show=false;
+                        hideView(menu3, 200);
+                        isMenu3Show = false;
                     }
                 }
             }
